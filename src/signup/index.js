@@ -17,7 +17,7 @@ const Signup = () => {
     }
   }, [emailVal, pwVal]);
 
-  const handleSignUpClick = async () => {
+  const handleSignupClick = async () => {
     try {
       axios.post(
         "https://pre-onboarding-selection-task.shop/auth/signup",
@@ -32,7 +32,6 @@ const Signup = () => {
     } catch (err) {
       console.log("Error...");
     }
-    axios.get();
   };
 
   return (
@@ -54,7 +53,7 @@ const Signup = () => {
       <button
         data-testid="signup-button"
         disabled={btnDisabled}
-        onClick={handleSignUpClick}
+        onClick={handleSignupClick}
       >
         회원가입
       </button>

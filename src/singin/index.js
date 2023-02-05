@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Signin = () => {
+  const navigate = useNavigate();
+
   const [emailVal, setEmailVal] = useState("");
   const [pwVal, setPwVal] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -13,6 +16,25 @@ const Signup = () => {
       setBtnDisabled(true);
     }
   }, [emailVal, pwVal]);
+
+  const handleSigninClick = async () => {
+    try {
+      const res = axios.post(
+        "https://pre-onboarding-selection-task.shop/auth/signin",
+        { email: emailVal, password: pwVal },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      localStorage.setItem("access_token", res.access_token);
+      // navigate("/todo");
+    } catch (err) {
+      console.log("Error...");
+    }
+  };
 
   return (
     <>
@@ -30,13 +52,15 @@ const Signup = () => {
           setPwVal(e.target.value);
         }}
       />
-      <Link to="/singin">
-        <button data-testid="signup-button" disabled={btnDisabled}>
-          로그인
-        </button>
-      </Link>
+      <button
+        data-testid="signin-button"
+        disabled={btnDisabled}
+        onClick={handleSigninClick}
+      >
+        로그인
+      </button>
     </>
   );
 };
 
-export default Signup;
+export default Signin;
