@@ -6,6 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Signup from "./signup";
 import Signin from "./singin";
+import Todo from "./todo";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,8 +14,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Signup />} />
-        <Route path="/singin" element={<Signin />} />
-        {/* <Route path="/todo" element={<Todo/>}/> */}
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/todo" element={<Todo />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

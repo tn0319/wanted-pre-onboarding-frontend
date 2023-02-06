@@ -19,7 +19,7 @@ const Signin = () => {
 
   const handleSigninClick = async () => {
     try {
-      const res = axios.post(
+      const res = await axios.post(
         "https://pre-onboarding-selection-task.shop/auth/signin",
         { email: emailVal, password: pwVal },
         {
@@ -28,9 +28,8 @@ const Signin = () => {
           },
         }
       );
-
-      localStorage.setItem("access_token", res.access_token);
-      // navigate("/todo");
+      localStorage.setItem("access_token", res.data.access_token);
+      navigate("/todo");
     } catch (err) {
       console.log("Error...");
     }
