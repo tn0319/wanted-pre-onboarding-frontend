@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Todo = () => {
+  const navigate = useNavigate();
+
   const [token, setToken] = useState(null);
   const [todoList, setTodoList] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
@@ -9,25 +12,35 @@ const Todo = () => {
   const [modifyTodo, setModifyTodo] = useState(null);
   const [modifyTxt, setModifyTxt] = useState("")
 
+
   useEffect(() => {
-    setToken(localStorage.getItem("access_token"));
-    getTodos();
+    const getToken = localStorage.getItem("access_token");
+    if (!getToken) {
+      navigate("/signin")
+    } else {
+      setToken(getToken)
+      getTodos();
+    }
   }, [token])
 
   // get todo
   const getTodos = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/todos`, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      }
-    })
-    setTodoList(res.data)
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/todos`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        }
+      })
+      setTodoList(res.data)
+    } catch (err) {
+      console.log("Error, Couldn't get todos...");
+    }
   }
 
   // create todo
   const handleCreateTodoClick = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/todos`, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/todos`, {
         todo: createTodo
       },
         {
@@ -38,21 +51,21 @@ const Todo = () => {
         })
       getTodos();
     } catch (err) {
-      console.log("Error...");
+      console.log("Error, Failed to create todos...");
     }
   }
 
   // delete todo
   const handleDelTodoClick = async (id) => {
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
       })
       getTodos();
     } catch (err) {
-      console.log("Error...");
+      console.log("Error, Failed to delete todos...");
     }
   }
 
@@ -66,9 +79,9 @@ const Todo = () => {
   // modify submit
   const handleModifySubmitClick = async (id) => {
     try {
-      const res = await axios.put(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
+      await axios.put(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
         todo: modifyTxt,
-        isCompleted: false
+        isCompleted: false // 으째야 할지? 모르겠음
       }, {
         headers: {
           "Content-Type": "application/json",
@@ -76,9 +89,9 @@ const Todo = () => {
         },
       })
       getTodos();
-      setEdit(false)
+      setEdit(false);
     } catch (err) {
-      console.log("Error...");
+      console.log("Error, Failed to edit todos...");
     }
   }
 

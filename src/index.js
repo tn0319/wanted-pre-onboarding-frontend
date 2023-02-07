@@ -2,20 +2,20 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+// import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Signup from "./signup";
-import Signin from "./singin";
-import Todo from "./todo";
+import Signup from "./Signup";
+import Signin from "./Signin";
+import Todo from "./Todo";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
         <Route path="/todo" element={<Todo />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

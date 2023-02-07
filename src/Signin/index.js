@@ -10,6 +10,10 @@ const Signin = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
+    localStorage.getItem("access_token") && navigate("/todo");
+  }, [])
+
+  useEffect(() => {
     if (emailVal.includes("@") && pwVal.length > 7) {
       setBtnDisabled(false);
     } else {
@@ -31,7 +35,7 @@ const Signin = () => {
       localStorage.setItem("access_token", res.data.access_token);
       navigate("/todo");
     } catch (err) {
-      console.log("Error...");
+      console.log("Error, Login failed...");
     }
   };
 
