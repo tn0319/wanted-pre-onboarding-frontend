@@ -2,16 +2,22 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+interface Todolist {
+  id: number,
+  todo: string,
+  isCompleted: boolean,
+  userId: number
+}
+
 const Todo = () => {
   const navigate = useNavigate();
 
-  const [token, setToken] = useState(null);
-  const [todoList, setTodoList] = useState([]);
+  const [token, setToken] = useState<string | null>(null);
+  const [todoList, setTodoList] = useState<Todolist[]>([]);
   const [createTodo, setCreateTodo] = useState("");
   const [edit, setEdit] = useState(false);
-  const [modifyTodo, setModifyTodo] = useState(null);
+  const [modifyTodo, setModifyTodo] = useState<number | null>(null);
   const [modifyTxt, setModifyTxt] = useState("")
-
 
   useEffect(() => {
     const getToken = localStorage.getItem("access_token");
@@ -23,7 +29,7 @@ const Todo = () => {
   }, [])
 
   useEffect(() => {
-    getTodos();
+    token && getTodos();
   }, [token])
 
   // get todo
@@ -60,7 +66,7 @@ const Todo = () => {
   }
 
   // delete todo
-  const handleDelTodoClick = async (id) => {
+  const handleDelTodoClick = async (id: number) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
         headers: {
@@ -74,26 +80,28 @@ const Todo = () => {
   }
 
   // modify todo
-  const handleModifTodoClick = (id, txt) => {
+  const handleModifTodoClick = (id: number, txt: string) => {
     setEdit(true);
     setModifyTodo(id);
     setModifyTxt(txt);
   }
 
   // modify submit
-  const handleModifySubmitClick = async (id) => {
+  const handleUpdateList = async (id: number, chk: boolean, txt?: string) => {
     try {
       await axios.put(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
-        todo: modifyTxt,
-        isCompleted: false // 으째야 할지? 모르겠음
+        todo: (txt ? txt : modifyTxt),
+        isCompleted: chk
       }, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
       })
+      if (edit && !txt) {
+        setEdit(false);
+      }
       getTodos();
-      setEdit(false);
     } catch (err) {
       console.log("Error, Failed to edit todos...");
     }
@@ -111,7 +119,7 @@ const Todo = () => {
           return (
             <li key={list.id}>
               <label>
-                <input type="checkbox" />
+                <input type="checkbox" checked={list.isCompleted} onChange={e => handleUpdateList(list.id, e.target.checked, list.todo)} />
                 {edit && list.id === modifyTodo ? (
                   <input type="text" data-testid="modify-input" value={modifyTxt} onChange={(e) => { setModifyTxt(e.target.value) }} />
                 ) : (
@@ -121,7 +129,7 @@ const Todo = () => {
               {
                 edit && list.id === modifyTodo ? (
                   <>
-                    <button className="btn-c-red" data-testid="submit-button" onClick={() => handleModifySubmitClick(list.id)}>제출</button>
+                    <button className="btn-c-red" data-testid="submit-button" onClick={() => handleUpdateList(list.id, list.isCompleted)}>제출</button>
                     <button data-testid="cancel-button" onClick={() => setEdit(false)}>취소</button>
                   </>) : (<>
                     <button data-testid="modify-button" onClick={() => handleModifTodoClick(list.id, list.todo)}>수정</button>

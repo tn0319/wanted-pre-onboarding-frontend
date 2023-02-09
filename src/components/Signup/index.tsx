@@ -34,13 +34,13 @@ const Signup = () => {
         }
       );
       navigate("/signin");
-    } catch (err) {
+    } catch (err: any) {
       setErrMsg(err.response.data.message);
     }
   };
 
   return (
-    <div className="signup-wrap">
+    <div className="signin-wrap">
       <h1>SIGN UP</h1>
       <dl>
         <dt>이메일:</dt>

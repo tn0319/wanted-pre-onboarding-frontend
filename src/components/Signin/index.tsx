@@ -35,7 +35,7 @@ const Signin = () => {
       );
       localStorage.setItem("access_token", res.data.access_token);
       navigate("/todo");
-    } catch (err) {
+    } catch (err: any) {
       setErrMsg(err.response.data.message);
     }
   };

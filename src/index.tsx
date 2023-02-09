@@ -1,16 +1,17 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import "./reset.css";
+import "styles/reset.css";
 import "styles/index.scss";
 import reportWebVitals from "./reportWebVitals";
-import { Signin, Signup, Todo } from "components";
+import { Signin, Signup, Todo, Main } from "components";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route path="/todo" element={<Todo />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
