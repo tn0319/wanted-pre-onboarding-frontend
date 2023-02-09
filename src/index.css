@@ -1,13 +1,57 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input[type=text],
+input[type=password] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 32px;
+  padding: 0 4px;
+}
+
+button {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 32px;
+}
+
+.signin-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+}
+
+.signin-wrap dl {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.signin-wrap dt {
+  flex: 0 0 100px;
+  text-align: right;
+}
+
+.signin-wrap dd {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.signin-wrap dd input {
+  width: 100%;
+}
+
+.signin-wrap .btn-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.signin-wrap .btn-wrap button {
+  width: 48%;
 }

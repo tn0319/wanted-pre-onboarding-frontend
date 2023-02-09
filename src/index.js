@@ -1,12 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-// import App from "./App";
+import "./reset.css";
+import "styles/index.scss";
 import reportWebVitals from "./reportWebVitals";
-import Signup from "./Signup";
-import Signin from "./Signin";
-import Todo from "./Todo";
+import { Signin, Signup, Todo } from "components";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

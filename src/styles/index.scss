@@ -1,0 +1,127 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 80px;
+    letter-spacing: -1px;
+}
+
+input[type=text],
+input[type=password] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 32px;
+    padding: 0 4px;
+}
+
+button,
+a {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 32px;
+
+    &:disabled {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        color: #ccc;
+    }
+
+    &.btn-c-red {
+        background-color: red;
+        border: 0;
+        color: #fff;
+    }
+
+    &.btn-c-black {
+        background-color: rgba($color: #000000, $alpha: 0.8);
+        border: 0;
+        color: #fff;
+    }
+}
+
+.info-txt {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+    letter-spacing: -1.2px;
+}
+
+.signin-wrap,
+.signup-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 500px;
+
+    dl {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    dt {
+        flex: 0 0 100px;
+        text-align: right;
+        padding-top: 8px;
+    }
+
+    dd {
+        flex: 1;
+        padding-left: 10px;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .btn-wrap {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+
+        button,
+        a {
+            width: 48%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.todo-wrap {
+    width: 500px;
+
+    .write-wrap {
+        margin-bottom: 30px;
+
+        input[type=text] {
+            width: 250px;
+        }
+    }
+
+
+    input[type=checkbox] {
+        margin-right: 10px;
+    }
+
+    button {
+        width: 50px;
+        margin-left: 5px;
+    }
+
+    .list-wrap li {
+        margin-top: 10px;
+
+        input[type=text] {
+            width: 223px;
+        }
+    }
+}

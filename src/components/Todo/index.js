@@ -19,8 +19,11 @@ const Todo = () => {
       navigate("/signin")
     } else {
       setToken(getToken)
-      getTodos();
     }
+  }, [])
+
+  useEffect(() => {
+    getTodos();
   }, [token])
 
   // get todo
@@ -50,6 +53,7 @@ const Todo = () => {
           },
         })
       getTodos();
+      setCreateTodo("");
     } catch (err) {
       console.log("Error, Failed to create todos...");
     }
@@ -96,17 +100,20 @@ const Todo = () => {
   }
 
   return (
-    <>
-      <input data-testid="new-todo-input" onChange={(e) => setCreateTodo(e.target.value)} />
-      <button data-testid="new-todo-add-button" onClick={handleCreateTodoClick}>추가</button>
-      <ul>
+    <div className="todo-wrap">
+      <h1>TODO LIST</h1>
+      <div className="write-wrap">
+        <input type="text" data-testid="new-todo-input" value={createTodo} onChange={(e) => setCreateTodo(e.target.value)} />
+        <button data-testid="new-todo-add-button" onClick={handleCreateTodoClick}>추가</button>
+      </div>
+      <ul className="list-wrap">
         {todoList.map((list) => {
           return (
             <li key={list.id}>
               <label>
                 <input type="checkbox" />
                 {edit && list.id === modifyTodo ? (
-                  <input data-testid="modify-input" value={modifyTxt} onChange={(e) => { setModifyTxt(e.target.value) }} />
+                  <input type="text" data-testid="modify-input" value={modifyTxt} onChange={(e) => { setModifyTxt(e.target.value) }} />
                 ) : (
                   <span>{list.todo}</span>
                 )}
@@ -114,18 +121,18 @@ const Todo = () => {
               {
                 edit && list.id === modifyTodo ? (
                   <>
-                    <button data-testid="submit-button" onClick={() => handleModifySubmitClick(list.id)}>제출</button>
+                    <button className="btn-c-red" data-testid="submit-button" onClick={() => handleModifySubmitClick(list.id)}>제출</button>
                     <button data-testid="cancel-button" onClick={() => setEdit(false)}>취소</button>
                   </>) : (<>
                     <button data-testid="modify-button" onClick={() => handleModifTodoClick(list.id, list.todo)}>수정</button>
-                    <button data-testid="delete-button" onClick={() => handleDelTodoClick(list.id)}>삭제</button>
+                    <button className="btn-c-black" data-testid="delete-button" onClick={() => handleDelTodoClick(list.id)}>삭제</button>
                   </>)
               }
             </li>
           )
         })}
       </ul>
-    </>
+    </div>
   );
 };
 
